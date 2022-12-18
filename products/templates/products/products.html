@@ -18,11 +18,9 @@
 
                 <h1 class="my-4">Store</h1>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">New products</a>
-                    <a href="#" class="list-group-item">Clothes</a>
-                    <a href="#" class="list-group-item">Footwear</a>
-                    <a href="#" class="list-group-item">Accessories</a>
-                    <a href="#" class="list-group-item">Gifts</a>
+                    {% for category in categories %}
+                        <a href="#" class="list-group-item">{{ category.title }}</a>
+                    {% endfor %}
                 </div>
 
             </div>
@@ -38,7 +36,7 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active">
-                            <img class="d-block img-fluid" src="{% static 'vendor/img/slides/slide-1.jpg' %}"
+                            <img class="d-block img-fluid" src="{% static 'vendor/img/slides/slide-2.jpg' %}"
                                  alt="First slide">
                         </div>
                         <div class="carousel-item">
@@ -61,27 +59,26 @@
                 </div>
 
                 <div class="row">
-
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="#">
-                                <img class="card-img-top"
-                                     src="{% static 'vendor/img/products/Adidas-hoodie.png' %}"
-                                     alt="">
-                            </a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a href="#"></a>
-                                </h4>
-                                <h5>Price</h5>
-                                <p class="card-text">Description</p>
-                            </div>
-                            <div class="card-footer text-center">
-                                <button type="button" class="btn btn-outline-success">Send to cart</button>
+                    {% for product in Products %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#">
+                                    <img class="card-img-top" src="/media/{{ product.image }}"
+                                         alt="">
+                                </a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">{{ product.title }}</a>
+                                    </h4>
+                                    <h5>{{ product.price }} rub.</h5>
+                                    <p class="card-text">{{ product.short_description }}</p>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="button" class="btn btn-outline-success">Send to cart</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                    {% endfor %}
                 </div>
 
                 <nav aria-label="Page navigation example">
@@ -97,18 +94,15 @@
                         </li>
                     </ul>
                 </nav>
-
             </div>
-
         </div>
-
     </div>
 {% endblock %}
 
 {% block footer %}
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Store 2021</p>
+            <p class="m-0 text-center text-white">Copyright &copy; Store 2022</p>
         </div>
     </footer>
 {% endblock %}
