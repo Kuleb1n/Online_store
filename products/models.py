@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class ProductCategory(models.Model):
     title = models.CharField('Title', max_length=150, unique=True)
@@ -30,3 +32,13 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+
+class Basket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField('Quantity', default=0)
+    created_timestamp = models.DateTimeField('Created_timestamp', auto_now_add=True)
+
+    def __str__(self):
+        return f'Shopping cart for {self.user.username} | Product {self.product.title}'
