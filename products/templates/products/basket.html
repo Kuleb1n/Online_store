@@ -1,0 +1,48 @@
+{% if baskets %}
+    <div class="col-lg-5">
+        <h4 class="mt-3 mb-3 d-flex justify-content-between align-items-center mb-3">
+            Basket <span class="badge badge-secondary badge-pill">3</span>
+        </h4>
+        {% for basket in baskets %}
+            <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ basket.product.title }}</h5>
+                <p class="card-text">{{ basket.product.short_description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between lh-condensed bg-light">
+                    <span class="text-muted">{{ basket.quantity }} pieces</span>
+                    <span class="text-muted">2 390 rub.</span>
+                    <span class="text-muted">
+                    <a href="{% url 'basket_add' basket.product.id %}" style="text-decoration: none; color: gray;">
+                        <i class="fas fa-cart-plus"></i>
+                    </a>
+                    <a href="{% url 'basket_delete' basket.id %}" style="text-decoration: none; color: gray;">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </span>
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+        <div class="card mb-3">
+            <div class="card-footer">
+                <p class="float-left">Total</p>
+                <h4 class="float-right">2 390 rub.</h4>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success btn-lg float-right">Arrange</button>
+    </div>
+{% else %}
+    <div class="col-lg-5">
+        <h4 class="mt-3 mb-3 d-flex justify-content-between align-items-center mb-3">
+            Basket <span class="badge badge-secondary badge-pill">0</span>
+        </h4>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">The basket is empty.</h5>
+                <a class="list-group-item text-center" href="{% url 'products' %}">To the goods</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
