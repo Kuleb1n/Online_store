@@ -74,13 +74,14 @@
                                     <p class="card-text">{{ product.short_description }}</p>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <button type="button" class="btn btn-outline-success">Send to cart</button>
+                                    <a href="{% url 'basket_add' product.id %}">
+                                        <button type="button" class="btn btn-outline-success">Send to cart</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
-
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
