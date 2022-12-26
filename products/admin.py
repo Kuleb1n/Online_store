@@ -20,5 +20,11 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
 
 
+class BasketAdmin(admin.ModelAdmin):
+    list_display = ['user', 'product', 'quantity', 'created_timestamp']
+    list_display_links = ['user', 'product', ]
+
+
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Basket, BasketAdmin)
