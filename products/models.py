@@ -42,3 +42,6 @@ class Basket(models.Model):
 
     def __str__(self):
         return f'Shopping cart for {self.user.username} | Product {self.product.title}'
+
+    def sum(self):
+        return self.quantity * self.product.price
