@@ -82,18 +82,18 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% if Products.has_other_pages %}
+                {% if page_obj.has_other_pages %}
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item {% if not Products.has_previous %} disabled {% endif %}">
+                            <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
                                 <a class="page-link"
-                                   href="{% if Products.has_previous %}
-                                         {% url 'page' Products.previous_page_number %}
+                                   href="{% if page_obj.has_previous %}
+                                         {% url 'page' page_obj.previous_page_number %}
                                          {% endif %}"
                                    tabindex="-1" aria-disabled="true">&laquo</a>
                             </li>
-                            {% for page in Products.paginator.page_range %}
-                                {% if Products.number == page %}
+                            {% for page in page_obj.paginator.page_range %}
+                                {% if page_obj.number == page %}
                                     <li class="page-item active">
                                         <a class="page-link" href="{% url 'page' page %}">
                                             {{ page }}
@@ -107,17 +107,17 @@
                                     </li>
                                 {% endif %}
                             {% endfor %}
-                            <li class="page-item {% if not Products.has_next %} disabled {% endif %}">
+                            <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
                                 <a class="page-link"
-                                   href="{% if Products.has_next %}
-                                         {% url 'page' Products.next_page_number %}
+                                   href="{% if page_obj.has_next %}
+                                         {% url 'page' page_obj.next_page_number %}
                                          {% endif %}">
                                     &raquo
                                 </a>
                             </li>
                         </ul>
                     </nav>
-               {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
