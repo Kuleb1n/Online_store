@@ -1,27 +1,31 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+
+from django.views.generic import TemplateView, ListView
+
 from products.models import *
-from django.core.paginator import Paginator
 
 
-def index(request):
-    return render(request, 'products/index.html')
+class IndexView(TemplateView):
+    template_name = 'products/index.html'
 
 
-def products(request, category_slug=None, page=1):
-    context = {
-        'categories': ProductCategory.objects.all(),
-    }
-    if category_slug:
-        Products = Product.objects.filter(category__slug=category_slug).select_related()
+class ProductsListView(ListView):
+    model = Product
+    template_name = 'products/products.html'
+    context_object_name = 'Products'
+    paginate_by = 3
 
-    else:
-        Products = Product.objects.all().select_related()
-    paginator = Paginator(Products, 3)
-    products_paginator = paginator.page(page)
-    context.update({'Products': products_paginator})
-    return render(request, 'products/products.html', context)
+    def get_queryset(self):
+        queryset = super(ProductsListView, self).get_queryset()
+        category__slug = self.kwargs.get('category_slug')
+        return Product.objects.filter(
+            category__slug=category__slug).select_related() if category__slug else queryset.select_related()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductsListView, self).get_context_data()
+        context['categories'] = ProductCategory.objects.all().select_related()
+        return context
 
 
 @login_required
