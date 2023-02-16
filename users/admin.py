@@ -7,7 +7,7 @@ from products.admin import BasketAdminInline
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'email', 'first_name', 'last_name', 'get_photo', 'date_joined',
-                    'is_staff']
+                    'is_staff', 'is_the_email_confirmed']
     list_display_links = ['username', 'email']
     search_fields = ['username', 'email']
     list_filter = ['date_joined', 'is_staff']
@@ -26,3 +26,10 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, UserAdmin)
+
+
+@admin.register(EmailConfirmation)
+class EmailConfirmationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'code', 'expiration')
+    fields = ('code', 'user', 'expiration')
+    readonly_fields = ('code',)
