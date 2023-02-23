@@ -143,3 +143,4 @@ LOGIN_URL = '/account/login/'
 # Email
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DOMAIN_NAME = "http://127.0.0.1:8000"
