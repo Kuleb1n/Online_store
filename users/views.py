@@ -1,11 +1,12 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import CreateView, UpdateView
+from django.http import HttpResponseRedirect
+from django.views.generic import CreateView, UpdateView, TemplateView
 
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from products.models import Basket
-from users.models import User
+from users.models import User, EmailConfirmation
 
 
 class UserLoginView(LoginView):
@@ -44,3 +45,18 @@ class LogoutUserView(LogoutView):
 
     def get_default_redirect_url(self):
         return reverse_lazy('login')
+
+
+class EmailConfirmationView(TemplateView):
+    template_name = 'users/email_confirmation.html'
+
+    def get(self, request, *args, **kwargs):
+        code = kwargs['code']
+        user = User.objects.get(email=kwargs['email'])
+        email_confirmation = EmailConfirmation.objects.filter(user=user, code=code)
+        if email_confirmation.exists() and not email_confirmation.first().is_expired():
+            user.is_the_email_confirmed = True
+            user.save()
+            return super(EmailConfirmationView, self).get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('index'))
