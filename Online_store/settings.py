@@ -142,5 +142,10 @@ LOGIN_URL = '/account/login/'
 
 # Email
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DOMAIN_NAME = "http://127.0.0.1:8000"
+
+EMAIL_HOST = "smtp.yandex.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "em-confirmation@yandex.ru"
+EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+EMAIL_USE_SSL = True
