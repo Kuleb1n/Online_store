@@ -36,12 +36,12 @@ class EmailConfirmation(models.Model):
         link = reverse('email-confirmation', kwargs={'email': self.user.email, 'code': self.code})
         user_link = f'{settings.DOMAIN_NAME}{link}'
         subject = f'Account Confirmation: {self.user.email}'
-        message = f'To confirm your account, follow the link: {user_link}'
+        message = f'To confirm your account {self.user.email}, follow the link: {user_link}'
 
         send_mail(
             subject=subject,
             message=message,
-            from_email='admin@mail.ru',
+            from_email=settings.EMAIL_HOST_USER,
             recipient_list=[self.user.email],
             fail_silently=False,
         )
